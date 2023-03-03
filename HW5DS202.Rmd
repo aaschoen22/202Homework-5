@@ -1,0 +1,64 @@
+---
+title: "MHW5"
+author: "Schoen"
+date: "2023-03-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+choco <- read.csv("https://ds202-at-isu.github.io/labs/data/choco.csv")
+head(choco)
+library(ggplot2)
+library(dplyr)
+```
+
+Question Set 1
+
+1) What is the overall number of chocolate bars rated?
+```{r}
+count(choco)
+```
+There were 1,852 chocolate bars rated. 
+
+2) How does the number of rating depend on the year? Draw a bar chart of the number of reports.
+```{r}
+ggplot(choco, aes(x=Review.Date)) + geom_bar()
+```
+
+The number of ratings seems to increase or only slightly decrease each year until reaching a peak in 2015. We can see a significant decrease from 2015 to 2017 on the bar chart. 
+
+Question Set 2
+
+1) How are ratings distributed? Draw a histogram of ratings and describe it. Mention outliers, if any. 
+```{r}
+hist(choco$Rating)
+```
+
+The distribution of ratings appears slightly left skewed. The majority of data is contained in the middle of the histogram, but some trail off to one/two while no values go above a four on the right. The ratings between one and two are potential outliers with very few being in that range. Without those data points, the histogram would be approximately symmetric. 
+
+2) Do ratings depend on the cocoa percentage of a chocolate bar?
+```{r}
+ggplot(data= choco, aes(x=Cocoa.Pct, y=Rating))+
+  geom_point()
+```
+
+There does not appear to be any correlation between cocoa percentage and rating for the chocolate bars. As seen on the scatterplot, there is no pattern or linear relationship indicated. 
+
+3) How do ratings compare across different company locations? Focus on the three locations with the most ratings.
+```{r}
+choco2 = choco[choco$Company.Location %in% c("U.S.A.", "Canada", "France"),]
+
+ggplot(data= choco2, aes(x=Rating, fill=factor(Company.Location))) +
+  geom_bar()
+```
+
+The distributions of the three locations are very similar in shape. Canada and France have higher counts of each rating than the United States, with Canada having the most overall. At all rating above 2.5 Canada has the largest count and the U.S. has the lowest. They all have the majority of their ratings in the same range, with the exception of the U.S. and France having some 1 ratings. 
+
+My Own Questions
+
+1) 
+
+
